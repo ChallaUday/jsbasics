@@ -1,17 +1,38 @@
-const express = require('express')
+// web server create
+
+// importing express
+
+
+
+const express = require ("express");
+
+const db =  require("./db")
 
 const app = express()
 
-const PORT = 5000 
+// import controllers router
 
-app.get('/',(req,res)=>{
-   return res.send('Hello world')
+const routes = require("./controllers/controller.user")
+
+app.use("/api",routes)
+
+
+
+//app.use(express.json())
+
+// app.get("/", (request, response) => {
+//     response.send("HI");
+// })
+
+// app.get("/myapp", (request,response) => {
+//     response.send("Hello world");
+// })
+
+db.connect().then(() => console.log("Database is Connected"))
+.then(() => {
+    // listen(port, function)
+    // funtion return server start or fail
+    app.listen(5000, () => {
+        console.log("Running on port 5000");
+    })
 })
-
-app.get('/newapp',(req,res)=>{
-   return res.send('Hello world')
-}
-   )
-   app.listen(PORT, () =>{
-      return console.log("server is running on port "+ PORT)
-   })
